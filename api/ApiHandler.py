@@ -5,7 +5,7 @@ class HelloApiHandler(Resource):
     def get(self):
         return {
             'resultStatus': 'SUCCESS',
-            'message': "Hello there, Checkout our AV Player!"
+            'message': "Puzzle: Use-case of Machine Learning on Video Processing"
         }
 
     def post(self):
@@ -34,3 +34,11 @@ class HelloApiHandler(Resource):
         final_ret = {"status": "Success", "message": message}
 
         return final_ret
+
+
+class testApiConnection(Resource):
+    def get(self):
+        return {
+            'resultStatus': 'SUCCESS',
+            'message': "test successful"
+        }

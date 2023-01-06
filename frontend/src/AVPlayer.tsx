@@ -42,8 +42,7 @@ export interface AVPlayerProps {
 }
 
 const AVPlayer = (args: AVPlayerProps) => {
-  const [playerEvents, setPlayerEvents] = useState({});
-  const [isPlaying, setIsPlaying] = useState(false); // handling state of play/pause of player
+  const [isPlaying, setIsPlaying] = useState(args.playing); // handling state of play/pause of player
   const playerRef = React.useRef<ReactPlayer>(null);
   const divRef = React.useRef<HTMLDivElement>(null);
 
@@ -61,6 +60,7 @@ const AVPlayer = (args: AVPlayerProps) => {
   };
 
   const handleKeypress = (event: { key: string }) => {
+    // console.log(isPlaying)
     if (event.key === "p") {
       // Video Play/pause toggle using p letter on keyboard
       onKeyPressHandler();
@@ -71,14 +71,24 @@ const AVPlayer = (args: AVPlayerProps) => {
     }
   };
 
+  const onVideoPlay = () => {
+    console.log(isPlaying)
+  };
+
+  const onVideoPause = () => {
+    console.log(isPlaying)
+  };
+
   return (
     <div ref={divRef} id="container" style={{ height: "400px" }}>
         <ReactPlayer
           ref={playerRef}
           url={args.url}
+          onPlay={onVideoPlay}
+          onPause={onVideoPause}
           width={args.width || undefined}
           height={args.height || undefined}
-          playing={isPlaying || undefined}
+          playing={isPlaying || false}
           loop={args.loop || undefined}
           controls={args.controls || undefined}
           light={args.light || undefined}
