@@ -1,2 +1,2 @@
 # puzzle
-Testing 2
+This app has a flask backend and REact JS frontend
