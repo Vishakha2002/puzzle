@@ -48,24 +48,13 @@ const AVPlayer = (args: AVPlayerProps) => {
   const divRef = React.useRef<HTMLDivElement>(null);
 
   // Handle events
-  // useEffect(() => {
-  //   divRef.current?.focus();
-  //   let events: any = {};
+  useEffect(() => {
+    divRef.current?.focus();
 
-  //   window.removeEventListener("keypress", handleKeypress);
-  //   window.addEventListener("keypress", handleKeypress);
-  //   console.log(args)
-  //   // args.events.forEach((name: string) => {
-  //   //   events[name] = (data?: any) => {
-  //   //     Streamlit.setComponentValue({
-  //   //       name: name,
-  //   //       data: data,
-  //   //     });
-  //   //   };
-  //   // });
-
-  //   setPlayerEvents(events);
-  // }, [args.events]);
+    window.removeEventListener("keypress", handleKeypress);
+    window.addEventListener("keypress", handleKeypress);
+    console.log(args)
+  }, []);
 
   const onKeyPressHandler = () => {
     setIsPlaying(!isPlaying);

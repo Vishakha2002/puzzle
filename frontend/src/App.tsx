@@ -6,7 +6,14 @@ import AVPlayer from './AVPlayer';
 function App() {
   const [message, setMessage] = useState({resultStatus: 0, message: ""})
   const [status, setStatus] = useState({})
-
+  const events = [
+    "onStart", "onPlay", "onProgress", "onDuration", "onPause",
+    "onBuffer", "onBufferEnd", "onSeek", "onEnded", "onError"
+  ]
+  let options = {
+    "events": events,
+    "progress_interval": 1000
+  }
   useEffect(()=>{
     axios.get('http://127.0.0.1:5000/flask/hello').then(response => {
       console.log("SUCCESS", response)
@@ -24,7 +31,7 @@ function App() {
           :
           <h3>LOADING</h3>}</div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
-            <AVPlayer url="https://www.youtube.com/watch?v=88kd9tVwkH8" />
+            <AVPlayer url="https://www.youtube.com/watch?v=88kd9tVwkH8" {...options}/>
           </div>
     </div>
   );
