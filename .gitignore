@@ -1,11 +1,10 @@
-# Virtual environment
+# pycache
 __pycache__/
 api/__pycache__/
+
+# Virtual environment
 venv/
 .DS_Store
 
 # Logs file
 flask_app.log
-
-# pycache
-
