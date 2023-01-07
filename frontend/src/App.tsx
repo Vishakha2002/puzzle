@@ -16,7 +16,7 @@ function App() {
     "progress_interval": 1000
   }
   useEffect(()=>{
-    axios.get('http://127.0.0.1:5000/api/hello').then(response => {
+    axios.get('/api/hello').then(response => {
       console.log("SUCCESS", response)
       setStatus(response.status)
       setMessage(response.data)
@@ -26,7 +26,7 @@ function App() {
   }, [])
 
   const testApi = () => {
-    axios.get('http://127.0.0.1:5000/api/test').then(response => {
+    axios.get('/api/test').then(response => {
       console.log("SUCCESS", response)
       setTestMessage(response.data)
     }).catch(error => {
