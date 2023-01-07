@@ -1,5 +1,6 @@
 from flask_restful import Api, Resource, reqparse
-
+import logging
+log = logging.getLogger(__name__)
 
 class HelloApiHandler(Resource):
     def get(self):
@@ -38,6 +39,7 @@ class HelloApiHandler(Resource):
 
 class testApiConnection(Resource):
     def get(self):
+        log.info("Hey inside test function")
         return {
             'resultStatus': 'SUCCESS',
             'message': "test successful"
