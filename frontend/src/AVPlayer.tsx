@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import ReactPlayer from "react-player";
 import { OnProgressProps } from "react-player/base";
+import Audio from './Audio';
+import "audio-react-recorder/dist/index.css";
 
 export interface AVPlayerProps {
   url?: string 
@@ -100,7 +102,7 @@ const AVPlayer = (args: AVPlayerProps) => {
           config={args.config || undefined}
         />
       <br></br>
-      {/* <StAudioRec /> */}
+      <Audio />
     </div>
   );
 };
