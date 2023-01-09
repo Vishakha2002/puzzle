@@ -1,5 +1,8 @@
 from flask_restful import Api, Resource, reqparse
 import logging
+import whisper
+import pprint
+
 log = logging.getLogger(__name__)
 
 class HelloApiHandler(Resource):
@@ -44,3 +47,33 @@ class testApiConnection(Resource):
             'resultStatus': 'SUCCESS',
             'message': "test successful"
         }
+
+class YoutubeUrls(Resource):
+    def get(self):
+        # log.info("Hey inside test function")
+        yt_urls = [
+            "https://www.youtube.com/watch?v=6gQ7m0c4ReI",
+            "https://youtu.be/is68rlOzEio",
+        ]
+        return {
+            'resultStatus': 'SUCCESS',
+            'url': yt_urls
+        }
+
+class AudioTranscriber(Resource):
+    def post(self):
+        log.info("Recieved a request to transcribe")
+        parser = reqparse.RequestParser()
+        parser.add_argument('path', type=str)
+        # parser.add_argument('message', type=str)
+
+        args = parser.parse_args()
+        audio_file = args['path']
+        log.info(f"Wav file path{audio_file}")
+
+        model = whisper.load_model("base")
+        result = model.transcribe(audio_file)
+
+        pprint(result["text"])
+        import time; time.sleep(1)
+        return result["text"]

@@ -1,8 +1,9 @@
-from flask import Flask, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory
 from flask_restful import Api, Resource, reqparse
 # from flask_cors import CORS #comment this on deployment
-from api.ApiHandler import testApiConnection
-from api.ApiHandler import HelloApiHandler
+from api.ApiHandler import testApiConnection, AudioTranscriber, YoutubeUrls, HelloApiHandler
+# from api.whisper_transcription import
+import os
 
 import logging
 logging.basicConfig(filename='flask_app.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
@@ -18,5 +19,22 @@ def serve(path):
     return send_from_directory(app.static_folder, 'index.html')
 
 
+@app.route("/api/receive_blob", methods=['post'])
+def form():
+    files = request.files
+    file = files.get('path')
+    print(file)
+
+    with open(os.path.abspath(f'{file}'), 'wb') as f:
+        f.write(file.content)
+
+    response = jsonify("File received and saved!")
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
+
+
 api.add_resource(HelloApiHandler, '/api/hello')
 api.add_resource(testApiConnection, '/api/test')
+api.add_resource(AudioTranscriber, '/api/transcribe')
+api.add_resource(YoutubeUrls, '/api/yturls')
