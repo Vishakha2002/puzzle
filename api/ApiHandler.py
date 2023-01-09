@@ -1,9 +1,9 @@
 from flask_restful import Api, Resource, reqparse
 import logging
 import whisper
-import pprint
 
 log = logging.getLogger(__name__)
+
 
 class HelloApiHandler(Resource):
     def get(self):
@@ -48,6 +48,7 @@ class testApiConnection(Resource):
             'message': "test successful"
         }
 
+
 class YoutubeUrls(Resource):
     def get(self):
         # log.info("Hey inside test function")
@@ -59,6 +60,7 @@ class YoutubeUrls(Resource):
             'resultStatus': 'SUCCESS',
             'url': yt_urls
         }
+
 
 class AudioTranscriber(Resource):
     def post(self):
@@ -74,6 +76,6 @@ class AudioTranscriber(Resource):
         model = whisper.load_model("base")
         result = model.transcribe(audio_file)
 
-        pprint(result["text"])
-        import time; time.sleep(1)
+        import time
+        time.sleep(1)
         return result["text"]

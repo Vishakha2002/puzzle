@@ -6,7 +6,8 @@ from api.ApiHandler import testApiConnection, AudioTranscriber, YoutubeUrls, Hel
 import os
 
 import logging
-logging.basicConfig(filename='flask_app.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+logging.basicConfig(filename='flask_app.log', level=logging.DEBUG,
+                    format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
@@ -21,12 +22,8 @@ def serve(path):
 
 @app.route("/api/receive_blob", methods=['post'])
 def form():
-    files = request.files
-    file = files.get('path')
-    print(file)
-
-    with open(os.path.abspath(f'{file}'), 'wb') as f:
-        f.write(file.content)
+    files = request.files['file']
+    files.save(os.path.abspath(f'test_1.wav'))
 
     response = jsonify("File received and saved!")
     response.headers.add('Access-Control-Allow-Origin', '*')
