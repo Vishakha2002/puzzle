@@ -41,6 +41,10 @@ function App() {
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setVideoURL(e.target.value)
   };
+  
+  const loadLocalVideo = () => {
+    setVideoURL('videos/dummy.mp4')
+  };
 
   return (
     <div className="App">
@@ -52,6 +56,16 @@ function App() {
             <button onClick={testApi}>Test</button>
             {testMessage.resultStatus === "SUCCESS" ?  <h5 style={{marginLeft: '5px'}}>{testMessage.message}</h5> : <h5 style={{marginLeft: '5px'}}>Click Test Button to Check Connection</h5>}
           </div>
+          <div id="outer">
+            <div className="inner">
+            <h5>Select a Video from List of Urls or Use Load Video button to play a local video</h5>
+            </div>
+            <div className="inner">
+              <button style={{width:'130px'}} onClick={loadLocalVideo}>
+                Local Video
+              </button>
+            </div>
+          </div>
           <div>
               <select 
                 defaultValue={videoURL}
@@ -62,7 +76,7 @@ function App() {
               </select>
             </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
-            <AVPlayer url={videoURL} playing={false} {...options}/>
+            <AVPlayer url={videoURL} playing={false} {...options} controls = {true}/>
           </div>
     </div>
   );

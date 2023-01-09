@@ -24,15 +24,6 @@ const Audio = () => {
     setrecordstate(RecordState.PAUSE);
   }
 
-  function download(content: Blob, fileName: string, contentType: string) {
-    // Download to device in downloads folder
-    var a = document.createElement("a");
-    var file = content
-    a.href = URL.createObjectURL(file);
-    a.download = Date.now().toString() + ".wav";
-    a.click();
-  }
-  
   const onStop = (audioData: any) => {
     console.log(audioData);
     setAudioData(audioData)
@@ -49,7 +40,6 @@ const Audio = () => {
     }).catch((error:any) => {
       console.log(error)
     })
-    // download(audioData.blob, "test.wav", audioData.type)
   };
 
   const handleKeypress = (event: { key: string }) => {
@@ -92,6 +82,7 @@ const Audio = () => {
             src={blobURL}
             ></audio> : <div></div>}
           </div> */}
+           
           <div style={{alignItems:'center'}}>
             <AudioReactRecorder
               state={recordstate}
