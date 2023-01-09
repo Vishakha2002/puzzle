@@ -30,8 +30,10 @@ function App() {
     axios.get('/api/yturls').then(response => {
       // console.log("SUCCESS", response)
       let data = response.data
+      let videoURLArray = data['url'][0]
       console.log(data)
-      setVideoURLs(response.data['url'][0])
+      setVideoURLs(videoURLArray);
+      setVideoURL(videoURLArray[0])
     }).catch(error => {
       console.log(error)
     })
