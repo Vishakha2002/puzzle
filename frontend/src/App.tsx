@@ -11,13 +11,12 @@ function App() {
     "onStart", "onPlay", "onProgress", "onDuration", "onPause",
     "onBuffer", "onBufferEnd", "onSeek", "onEnded", "onError"
   ]
+  const [videoURL, setVideoURL] = useState("")
+  const [videoURLs, setVideoURLs] = useState([])
   let options = {
     "events": events,
     "progress_interval": 1000
-  }
-  const videoURLs = ["https://www.youtube.com/watch?v=88kd9tVwkH8", "https://www.youtube.com/watch?v=2Qsn7QHS1XU", "https://www.youtube.com/watch?v=SdLShOCvVeM", "https://www.youtube.com/watch?v=TzmtH_cOIb0", "https://www.youtube.com/watch?v=vchifPjqzZ4"]
-
-  const [videoURL, setVideoURL] = useState(videoURLs[0])
+  }  
 
   useEffect(()=>{
     axios.get('/api/hello').then(response => {
@@ -27,6 +26,16 @@ function App() {
     }).catch(error => {
       console.log(error)
     })
+
+    axios.get('/api/yturls').then(response => {
+      // console.log("SUCCESS", response)
+      let data = response.data
+      console.log(data)
+      setVideoURLs(response.data['url'][0])
+    }).catch(error => {
+      console.log(error)
+    })
+
   }, [])
 
   const testApi = () => {

@@ -53,8 +53,8 @@ class YoutubeUrls(Resource):
     def get(self):
         # log.info("Hey inside test function")
         yt_urls = [
-            "https://www.youtube.com/watch?v=6gQ7m0c4ReI",
-            "https://youtu.be/is68rlOzEio",
+            ["https://www.youtube.com/watch?v=88kd9tVwkH8", "https://www.youtube.com/watch?v=2Qsn7QHS1XU",
+                "https://www.youtube.com/watch?v=TzmtH_cOIb0", "https://www.youtube.com/watch?v=vchifPjqzZ4"]
         ]
         return {
             'resultStatus': 'SUCCESS',

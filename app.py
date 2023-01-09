@@ -28,8 +28,12 @@ def form():
     filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"
     files.save(os.path.abspath(filename))
     model = whisper.load_model("base")
+
+    print(model)
+
     result = model.transcribe(filename)
 
+    print(result)
     # print(result["text"])
     # print(response)
     response = jsonify(result["text"])
