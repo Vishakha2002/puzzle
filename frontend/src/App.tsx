@@ -28,7 +28,6 @@ function App() {
     })
 
     axios.get('/api/yturls').then(response => {
-      // console.log("SUCCESS", response)
       let data = response.data
       let videoURLArray = data['url'][0]
       console.log(data)
@@ -37,17 +36,7 @@ function App() {
     }).catch(error => {
       console.log(error)
     })
-
   }, [])
-
-  const testApi = () => {
-    axios.get('/api/test').then(response => {
-      console.log("SUCCESS", response)
-      setTestMessage(response.data)
-    }).catch(error => {
-      console.log(error)
-    })
-  };
 
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setVideoURL(e.target.value)
@@ -63,10 +52,6 @@ function App() {
           <h3>{message.message}</h3>
           :
           <h3>LOADING</h3>}</div>
-          <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '20px', marginBottom: '25px', marginTop: '25px'}}>
-            <button onClick={testApi}>Test</button>
-            {testMessage.resultStatus === "SUCCESS" ?  <h5 style={{marginLeft: '5px'}}>{testMessage.message}</h5> : <h5 style={{marginLeft: '5px'}}>Click Test Button to Check Connection</h5>}
-          </div>
           <div id="outer">
             <div className="inner">
             <h5>Select a Video from List of Urls or Use Load Video button to play a local video</h5>
@@ -78,13 +63,13 @@ function App() {
             </div>
           </div>
           <div>
-              <select 
-                defaultValue={videoURL}
-                onChange={handleChange}>
-                {videoURLs.map((user) => {
-                  return <option>{user}</option>;
-                })}
-              </select>
+            <select 
+              defaultValue={videoURL}
+              onChange={handleChange}>
+              {videoURLs.map((user) => {
+                return <option>{user}</option>;
+              })}
+            </select>
             </div>
           <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
             <AVPlayer url={videoURL} playing={false} {...options} controls = {true}/>

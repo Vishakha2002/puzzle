@@ -19,7 +19,7 @@ api = Api(app)
 
 @app.route("/", defaults={'path': ''})
 def serve(path):
-    return send_from_directory(app.static_folder, 'index.html')
+    return send_from_directory('frontend/build', 'index.html')
 
 
 @app.route("/api/receive_blob", methods=['post'])
@@ -27,19 +27,32 @@ def form():
     files = request.files['file']
     filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"
     files.save(os.path.abspath(filename))
-    model = whisper.load_model("base")
 
-    print(model)
+    # model = whisper.load_model("base")
 
-    result = model.transcribe(filename)
+    # print(model)
 
-    print(result)
-    # print(result["text"])
-    # print(response)
-    response = jsonify(result["text"])
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    # result = model.transcribe(filename)
 
-    return response
+    # print(result)
+    # # print(result["text"])
+    # # print(response)
+    # response = jsonify(result["text"])
+    # response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return {
+        'resultStatus': 'SUCCESS',
+        'text': "We have got your question!"
+    }
+
+
+@app.route("/api/trascribe_question", methods=['get'])
+def trascribe():
+
+    return {
+        'resultStatus': 'SUCCESS',
+        'text': "Here is the answer to your Question"
+    }
 
 
 api.add_resource(HelloApiHandler, '/api/hello')

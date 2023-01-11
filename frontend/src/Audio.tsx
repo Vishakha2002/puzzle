@@ -7,6 +7,7 @@ const Audio = () => {
   const [isStop, setIsStop] = useState(false);
   const [recordstate, setrecordstate] = useState("NONE");
   const [blobURL, setblobURL] = useState("");
+  const [blobURLResponse, setblobURLResponse] = useState("");
   const [audioData, setAudioData] = useState(null);
   
   const start = () => {
@@ -24,6 +25,37 @@ const Audio = () => {
     setrecordstate(RecordState.PAUSE);
   }
 
+  const transcribe = () => {
+    axios.get('/api/trascribe')
+    .then(response => {
+      console.log(response)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
+  const showLoadingMessage = () => {
+    setTimeout(() => {
+      // Show loading after 5 seconds and call transcribe api after
+      setblobURLResponse("Loading Data...")
+
+      setTimeout(() => {
+        callTranscribeAPI();
+      }, 5000)
+    }, 5000)
+  }
+
+  const callTranscribeAPI = () => {
+    axios.get('/api/trascribe_question').then(response => {
+      console.log(response)
+      // Update the same Text on screen to show the transcribed Response
+      const blobResponse = response.data["text"]
+      setblobURLResponse(blobResponse)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+
   const onStop = (audioData: any) => {
     console.log(audioData);
     setAudioData(audioData)
@@ -37,7 +69,17 @@ const Audio = () => {
       url: "/api/receive_blob",
       data: data,
       headers: { "Content-Type": "multipart/form-data" },
-    }).catch((error:any) => {
+    })
+    .then((response) => {
+      console.log(response)
+      // Response from blob api
+      const blobResponse = response.data["text"]
+      setblobURLResponse(blobResponse)
+
+      // This function firsts shows Loading message and calls transcribe API as well
+      showLoadingMessage();
+    })
+    .catch((error:any) => {
       console.log(error)
     })
   };
@@ -75,14 +117,13 @@ const Audio = () => {
               </button>
             </div>
           </div>
-          {/* <div style={{alignItems:'center', marginTop: '5px'}}>
-            {blobURL !== "" ? <audio
-            id='audio'
-            controls
-            src={blobURL}
-            ></audio> : <div></div>}
-          </div> */}
-           
+          <div style={{alignItems:'center', marginTop: '5px'}}>
+            {blobURLResponse !== "" ? 
+            <div>
+              <h5>{blobURLResponse}</h5>
+            </div>
+            : <div></div>}
+          </div>
           <div style={{alignItems:'center'}}>
             <AudioReactRecorder
               state={recordstate}
