@@ -1,4 +1,5 @@
 from flask_restful import Api, Resource, reqparse
+from flask import Flask, request
 import logging
 import whisper
 
@@ -49,17 +50,28 @@ class testApiConnection(Resource):
         }
 
 
-class YoutubeUrls(Resource):
+class VideoUrls(Resource):
     def get(self):
-        # log.info("Hey inside test function")
+        args = request.args
+
+        # online video urls
         yt_urls = [
             ["https://www.youtube.com/watch?v=88kd9tVwkH8", "https://www.youtube.com/watch?v=2Qsn7QHS1XU",
                 "https://www.youtube.com/watch?v=TzmtH_cOIb0", "https://www.youtube.com/watch?v=vchifPjqzZ4"]
         ]
-        return {
-            'resultStatus': 'SUCCESS',
-            'url': yt_urls
-        }
+
+        # local video urls
+        local_urls = [['videos/dummy.mp4']]
+        if args.get("type") == 'local':
+            return {
+                'resultStatus': 'SUCCESS',
+                'url': local_urls
+            }
+        else:
+            return {
+                'resultStatus': 'SUCCESS',
+                'url': yt_urls
+            }
 
 
 class AudioTranscriber(Resource):

@@ -27,8 +27,9 @@ function App() {
       console.log(error)
     })
 
-    axios.get('/api/yturls').then(response => {
+    axios.get('/api/yturls?type=online').then(response => {
       let data = response.data
+      console.log(data)
       let videoURLArray = data['url'][0]
       console.log(data)
       setVideoURLs(videoURLArray);
@@ -42,9 +43,9 @@ function App() {
     setVideoURL(e.target.value)
   };
   
-  const loadLocalVideo = () => {
-    setVideoURL('videos/dummy.mp4')
-  };
+  // const loadLocalVideo = () => {
+  //   setVideoURL('videos/dummy.mp4')
+  // };
 
   return (
     <div className="App">
@@ -56,11 +57,11 @@ function App() {
             <div className="inner">
             <h5>Select a Video from List of Urls or Use Load Video button to play a local video</h5>
             </div>
-            <div className="inner">
+            {/* <div className="inner">
               <button style={{width:'130px'}} onClick={loadLocalVideo}>
                 Local Video
               </button>
-            </div>
+            </div> */}
           </div>
           <div>
             <select 

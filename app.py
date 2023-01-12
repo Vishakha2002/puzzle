@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_restful import Api, Resource, reqparse
 # from flask_cors import CORS #comment this on deployment
-from api.ApiHandler import testApiConnection, AudioTranscriber, YoutubeUrls, HelloApiHandler
+from api.ApiHandler import testApiConnection, AudioTranscriber, VideoUrls, HelloApiHandler
 # from api.whisper_transcription import
 import os
 import whisper
@@ -58,4 +58,4 @@ def trascribe():
 api.add_resource(HelloApiHandler, '/api/hello')
 api.add_resource(testApiConnection, '/api/test')
 api.add_resource(AudioTranscriber, '/api/transcribe')
-api.add_resource(YoutubeUrls, '/api/yturls')
+api.add_resource(VideoUrls, '/api/yturls')
