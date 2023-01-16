@@ -22,3 +22,6 @@ sudo systemctl restart nginx
 # List of issues
 1. if we set the URL to local video. OnFocus starts playing the video. This does not happen if the type is set to online
 2. Keypress handling - https://dev.to/alexkhismatulin/update-boolean-state-right-with-react-hooks-3k2i
+
+# Microphone settings:
+chrome://settings/content/microphone

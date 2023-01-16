@@ -23,26 +23,20 @@ def serve(path):
 
 
 @app.route("/api/receive_blob", methods=['post'])
-def form():
+def transcribe_question():
     files = request.files['file']
     filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"
-    files.save(os.path.abspath(filename))
+    file_location = os.path.abspath("./user_questions/" + filename)
+    files.save(file_location)
 
-    # model = whisper.load_model("base")
+    model = whisper.load_model("base")
 
-    # print(model)
-
-    # result = model.transcribe(filename)
-
-    # print(result)
-    # # print(result["text"])
-    # # print(response)
-    # response = jsonify(result["text"])
-    # response.headers.add('Access-Control-Allow-Origin', '*')
+    result = model.transcribe(file_location)
+    text = str(result["text"])
 
     return {
         'resultStatus': 'SUCCESS',
-        'text': "We have got your question!"
+        'text': text
     }
 
 

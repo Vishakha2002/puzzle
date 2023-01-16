@@ -9,7 +9,7 @@ const Audio = () => {
   const [blobURL, setblobURL] = useState("");
   const [blobURLResponse, setblobURLResponse] = useState("");
   const [audioData, setAudioData] = useState(null);
-  
+
   const start = () => {
     setIsStop(false);
     setrecordstate(RecordState.START);
@@ -118,7 +118,7 @@ const Audio = () => {
             </div>
           </div>
           <div style={{alignItems:'center', marginTop: '5px'}}>
-            {blobURLResponse !== "" ? 
+            {blobURLResponse !== "" ?
             <div>
               <h5>{blobURLResponse}</h5>
             </div>
