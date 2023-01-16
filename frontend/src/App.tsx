@@ -1,9 +1,10 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios'
 import AVPlayer from './AVPlayer';
 
 function App() {
+  let video_type = "online"
   const [message, setMessage] = useState({resultStatus: 0, message: ""})
   const [status, setStatus] = useState({})
   const [testMessage, setTestMessage] = useState({resultStatus: "", message: ""})
@@ -13,6 +14,7 @@ function App() {
   ]
   const [videoURL, setVideoURL] = useState("")
   const [videoURLs, setVideoURLs] = useState([])
+  const [useLocalVideo, setUseLocalVideo] = useState(false)
   let options = {
     "events": events,
     "progress_interval": 1000
@@ -26,8 +28,16 @@ function App() {
     }).catch(error => {
       console.log(error)
     })
+    if (useLocalVideo){
+      video_type = "local"
+    }
 
-    axios.get('/api/yturls?type=local').then(response => {
+    axios.get('/api/yturls', {
+      params: {
+        type: video_type
+      }
+    })
+    .then(response => {
       let data = response.data
       console.log(data)
       let videoURLArray = data['url'][0]
@@ -37,15 +47,16 @@ function App() {
     }).catch(error => {
       console.log(error)
     })
-  }, [])
+  }, [useLocalVideo])
 
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setVideoURL(e.target.value)
   };
 
-  // const loadLocalVideo = () => {
-  //   setVideoURL('videos/dummy.mp4')
-  // };
+  const handleUseLocalVideonChange = useCallback(
+    () => setUseLocalVideo(useLocalVideo => !useLocalVideo),
+    [setUseLocalVideo],
+  );
 
   return (
     <div className="App">
@@ -55,16 +66,19 @@ function App() {
           <h3>LOADING</h3>}</div>
           <div id="outer">
             <div className="inner">
-            <h5>Select a Video from List of Urls or Use Load Video button to play a local video</h5>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={useLocalVideo}
+                  onChange={handleUseLocalVideonChange}
+                />
+                <span>Check to use Downloaded videos instead of Youtube Urls</span>
+              </label>
             </div>
-            {/* <div className="inner">
-              <button style={{width:'130px'}} onClick={loadLocalVideo}>
-                Local Video
-              </button>
-            </div> */}
+            {/* <p>Is "My Value" checked? {useLocalVideo.toString()}</p> */}
           </div>
           <div>
-            <select 
+            <select
               defaultValue={videoURL}
               onChange={handleChange}>
               {videoURLs.map((user) => {
