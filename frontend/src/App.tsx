@@ -16,7 +16,7 @@ function App() {
   let options = {
     "events": events,
     "progress_interval": 1000
-  }  
+  }
 
   useEffect(()=>{
     axios.get('/api/hello').then(response => {
@@ -27,7 +27,7 @@ function App() {
       console.log(error)
     })
 
-    axios.get('/api/yturls?type=online').then(response => {
+    axios.get('/api/yturls?type=local').then(response => {
       let data = response.data
       console.log(data)
       let videoURLArray = data['url'][0]
@@ -42,7 +42,7 @@ function App() {
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setVideoURL(e.target.value)
   };
-  
+
   // const loadLocalVideo = () => {
   //   setVideoURL('videos/dummy.mp4')
   // };

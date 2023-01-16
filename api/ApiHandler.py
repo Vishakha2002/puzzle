@@ -61,7 +61,7 @@ class VideoUrls(Resource):
         ]
 
         # local video urls
-        local_urls = [['videos/dummy.mp4']]
+        local_urls = [['Marcin__Moonlight_Sonata_on_One_Guitar_Official_Video.mp4']]
         if args.get("type") == 'local':
             return {
                 'resultStatus': 'SUCCESS',

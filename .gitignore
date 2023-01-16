@@ -9,3 +9,7 @@ venv/
 # Logs file
 flask_app.log
 *.wav
+
+# Videos
+frontend/build/*.mp4
+frontend/public/*.mp4
