@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import AudioReactRecorder, { RecordState } from "audio-react-recorder";
+import PulseLoader from "react-spinners/PulseLoader";
 import "./Audio.css";
 import axios from 'axios';
 
@@ -9,6 +10,7 @@ const Audio = () => {
   const [blobURL, setblobURL] = useState("");
   const [blobURLResponse, setblobURLResponse] = useState("");
   const [audioData, setAudioData] = useState(null);
+  const [loadingInProgress, setLoadingInProgress] = useState(false);
 
   const start = () => {
     setIsStop(false);
@@ -25,14 +27,18 @@ const Audio = () => {
     setrecordstate(RecordState.PAUSE);
   }
 
-  const transcribe = () => {
-    axios.get('/api/trascribe')
-    .then(response => {
-      console.log(response)
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  // const transcribe = () => {
+  //   axios.get('/api/trascribe')
+  //   .then(response => {
+  //     console.log(response)
+  //   }).catch(error => {
+  //     console.log(error)
+  //   })
+  // }
+  const updateLodingInProgress = useCallback(
+    () => setLoadingInProgress(loadingInProgress => !loadingInProgress),
+    [setLoadingInProgress],
+  );
 
   const showLoadingMessage = () => {
     setTimeout(() => {
@@ -63,6 +69,7 @@ const Audio = () => {
 
     const data = new FormData();
     data.append('file', audioData.blob);
+    updateLodingInProgress();
 
     axios({
       method: "post",
@@ -75,6 +82,7 @@ const Audio = () => {
       // Response from blob api
       const blobResponse = response.data["text"]
       setblobURLResponse(blobResponse)
+      updateLodingInProgress();
 
       // This function firsts shows Loading message and calls transcribe API as well
       showLoadingMessage();
@@ -122,7 +130,7 @@ const Audio = () => {
             <div>
               <h5>{blobURLResponse}</h5>
             </div>
-            : <div></div>}
+            : <div><PulseLoader color="#36d7b7" loading={loadingInProgress} /></div>}
           </div>
           <div style={{alignItems:'center'}}>
             <AudioReactRecorder
