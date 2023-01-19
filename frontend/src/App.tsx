@@ -7,7 +7,7 @@ function App() {
   let video_type = "online"
   const [message, setMessage] = useState({resultStatus: 0, message: ""})
   const [status, setStatus] = useState({})
-  const [testMessage, setTestMessage] = useState({resultStatus: "", message: ""})
+  // const [testMessage, setTestMessage] = useState({resultStatus: "", message: ""})
   const events = [
     "onStart", "onPlay", "onProgress", "onDuration", "onPause",
     "onBuffer", "onBufferEnd", "onSeek", "onEnded", "onError"
@@ -39,9 +39,9 @@ function App() {
     })
     .then(response => {
       let data = response.data
-      console.log(data)
+      // console.log(data)
       let videoURLArray = data['url'][0]
-      console.log(data)
+      // console.log(data)
       setVideoURLs(videoURLArray);
       setVideoURL(videoURLArray[0])
     }).catch(error => {
@@ -50,7 +50,16 @@ function App() {
   }, [useLocalVideo])
 
   const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setVideoURL(e.target.value)
+    setVideoURL(e.target.value);
+    axios.get('/api/trigger_preprocessing', {
+      params: {
+        yt_url: e.target.value
+      }
+    }).then(response => {
+      console.log("Successfully triggered video pre-processing", response)
+    }).catch(error => {
+      console.log(error)
+    })
   };
 
   const handleUseLocalVideonChange = useCallback(
@@ -65,7 +74,7 @@ function App() {
           :
           <h3>LOADING</h3>}</div>
           <div id="outer">
-            <div className="inner">
+            {/* <div className="inner">
               <label>
                 <input
                   type="checkbox"
@@ -74,7 +83,7 @@ function App() {
                 />
                 <span>Check to use Downloaded videos instead of Youtube Urls</span>
               </label>
-            </div>
+            </div> */}
             {/* <p>Is "My Value" checked? {useLocalVideo.toString()}</p> */}
           </div>
           <div>

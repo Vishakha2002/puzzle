@@ -5,87 +5,89 @@ import "./Audio.css";
 import axios from 'axios';
 
 const Audio = () => {
-  const [isStop, setIsStop] = useState(false);
+  // const [isStop, setIsStop] = useState(false);
   const [recordstate, setrecordstate] = useState("NONE");
-  const [blobURL, setblobURL] = useState("");
+  // const [blobURL, setblobURL] = useState("");
   const [blobURLResponse, setblobURLResponse] = useState("");
-  const [audioData, setAudioData] = useState(null);
+  // const [audioData, setAudioData] = useState(null);
   const [loadingInProgress, setLoadingInProgress] = useState(false);
-
-  const start = () => {
-    setIsStop(false);
-    setrecordstate(RecordState.START);
-    setblobURL("");
-  };
-
-  const stop = () => {
-    setrecordstate(RecordState.STOP);
-    setIsStop(true);
-  };
 
   const pause = () => {
     setrecordstate(RecordState.PAUSE);
   }
 
-  // const transcribe = () => {
-  //   axios.get('/api/trascribe')
-  //   .then(response => {
-  //     console.log(response)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }
-  const updateLodingInProgress = useCallback(
+  const updateLoadingInProgress = useCallback(
     () => setLoadingInProgress(loadingInProgress => !loadingInProgress),
     [setLoadingInProgress],
   );
 
-  const showLoadingMessage = () => {
-    setTimeout(() => {
-      // Show loading after 5 seconds and call transcribe api after
-      setblobURLResponse("Loading Data...")
+  const setRecorderStateToStop = useCallback(
+    () => {
+      setrecordstate(RecordState.STOP);
+      setblobURLResponse("");
+      // setIsStop(true);
+    },
+    // [setIsStop, setrecordstate, setblobURL],
+    [setrecordstate, setblobURLResponse],
+  );
 
-      setTimeout(() => {
-        callTranscribeAPI();
-      }, 5000)
-    }, 5000)
-  }
+  const setRecorderStateToStart = useCallback(
+    () => {
+      // setIsStop(false);
+      setrecordstate(RecordState.START);
+      // setblobURL("");
+      setblobURLResponse("");
+    },
+    // [setIsStop, setrecordstate, setblobURL, setblobURLResponse],
+    [setrecordstate, setblobURLResponse],
+  );
+  // const showLoadingMessage = () => {
+  //   setTimeout(() => {
+  //     // Show loading after 5 seconds and call transcribe api after
+  //     setblobURLResponse("Loading Data...")
 
-  const callTranscribeAPI = () => {
-    axios.get('/api/trascribe_question').then(response => {
-      console.log(response)
-      // Update the same Text on screen to show the transcribed Response
-      const blobResponse = response.data["text"]
-      setblobURLResponse(blobResponse)
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+  //     setTimeout(() => {
+  //       callTranscribeAPI();
+  //     }, 5000)
+  //   }, 5000)
+  // }
+
+  // const callTranscribeAPI = () => {
+  //   axios.get('/api/trascribe_question').then(response => {
+  //     console.log(response)
+  //     // Update the same Text on screen to show the transcribed Response
+  //     const blobResponse = response.data["text"]
+  //     setblobURLResponse("Your question was: "+blobResponse)
+  //   }).catch(error => {
+  //     console.log(error)
+  //   })
+  // }
 
   const onStop = (audioData: any) => {
-    console.log(audioData);
-    setAudioData(audioData)
-    setblobURL(audioData.url);
+    // console.log(audioData);
+    // setAudioData(audioData)
+    // setblobURL(audioData.url);
 
     const data = new FormData();
     data.append('file', audioData.blob);
-    updateLodingInProgress();
+    updateLoadingInProgress();
 
     axios({
       method: "post",
-      url: "/api/receive_blob",
+      url: "/api/transcribe_question",
       data: data,
       headers: { "Content-Type": "multipart/form-data" },
     })
     .then((response) => {
+      setRecorderStateToStop()
       console.log(response)
       // Response from blob api
       const blobResponse = response.data["text"]
-      setblobURLResponse(blobResponse)
-      updateLodingInProgress();
+      setblobURLResponse("Your question is: "+ blobResponse)
+      updateLoadingInProgress();
 
       // This function firsts shows Loading message and calls transcribe API as well
-      showLoadingMessage();
+      // start();
     })
     .catch((error:any) => {
       console.log(error)
@@ -95,15 +97,15 @@ const Audio = () => {
   const handleKeypress = (event: { key: string }) => {
     if (event.key === "a") {
       // start audio recording
-      start();
+      setRecorderStateToStart();
     }
     if (event.key === "f") {
       // stop audio recording and hide component as well
-      stop();
+      setRecorderStateToStop();
     }
     if (event.key === "p") {
       // stop audio recording and hide component as well
-      stop();
+      setRecorderStateToStop();
     }
   };
 
@@ -115,12 +117,12 @@ const Audio = () => {
         <div>
           <div id="outer">
             <div className="inner">
-              <button id="record" style={{width:'130px'}} onClick={start}>
+              <button id="record" style={{width:'130px'}} onClick={setRecorderStateToStart}>
                 Click to Ask!
               </button>
             </div>
             <div className="inner">
-              <button id="stop" style={{width:'130px'}}onClick={stop}>
+              <button id="stop" style={{width:'130px'}}onClick={setRecorderStateToStop}>
                 Fetch response!
               </button>
             </div>

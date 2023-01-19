@@ -22,7 +22,7 @@ def serve(path):
     return send_from_directory('frontend/build', 'index.html')
 
 
-@app.route("/api/receive_blob", methods=['post'])
+@app.route("/api/transcribe_question", methods=['post'])
 def transcribe_question():
     files = request.files['file']
     filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"
