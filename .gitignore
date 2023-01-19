@@ -13,3 +13,9 @@ flask_app.log
 # Videos
 frontend/build/*.mp4
 frontend/public/*.mp4
+
+ffmpeg-git-i686-static.tar.xz
+ffmpeg_dir/
+vggish_model.ckpt
+
+data/
