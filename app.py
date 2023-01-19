@@ -11,28 +11,22 @@ import requests
 import tarfile
 
 import logging
-# logging.basicConfig(filename='flask_app.log', level=logging.DEBUG,
-#                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-ch.setFormatter(formatter)
-log = logging.getLogger(__name__)
-log.addHandler(ch)
+logging.basicConfig(filename='flask_app.log', level=logging.DEBUG,
+                    format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 
 def download_required_files():
     if os.path.exists("vggish_model.ckpt"):
-        log.info("Found vggish_model.ckpt, no need to download it")
+        logging.info("Found vggish_model.ckpt, no need to download it")
     else:
         URL = "https://storage.googleapis.com/audioset/vggish_model.ckpt"
         response = requests.get(URL)
         open("vggish_model.ckpt", "wb").write(response.content)
-        log.info("Downloaded vggish_model.ckpt")
+        logging.info("Downloaded vggish_model.ckpt")
     if os.path.exists("ffmpeg_dir/ffmpeg-git-20220910-i686-static/ffmpeg"):
-        log.info("ffmpeg is already downloaded")
+        logging.info("ffmpeg is already downloaded")
     else:
-        log.info("Downloading ffmpeg")
+        logging.info("Downloading ffmpeg")
         os.makedirs("ffmpeg_dir")
 
         URL = "https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-i686-static.tar.xz"
@@ -42,7 +36,7 @@ def download_required_files():
         ffmpeg_file = tarfile.open('ffmpeg-git-i686-static.tar.xz')
         ffmpeg_file.extractall('./ffmpeg_dir')
         ffmpeg_file.close()
-        log.info("Setting ffmpeg file path")
+        logging.info("Setting ffmpeg file path")
 
     if "ffmpeg_dir" not in os.environ["PATH"]:
         os.environ["PATH"] += os.pathsep + os.path.join(os.getcwd(), "ffmpeg_dir/ffmpeg-git-20220910-i686-static/")
@@ -97,8 +91,8 @@ def setup_directory() -> None:
 
 def create_app() -> Flask:
     app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-    log.info("Staring Puzzle")
-    log.info("Setting up directories for Puzzle")
+    logging.info("Staring Puzzle")
+    logging.info("Setting up directories for Puzzle")
     setup_directory()
     download_required_files()
     return app
