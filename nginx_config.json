@@ -1,0 +1,54 @@
+server {
+    # listen on port 80 (http)
+    listen 80;
+    server_name _;
+    location / {
+        # redirect any requests to the same URL but on https
+        return 301 https://$host$request_uri;
+    }
+}
+server {
+    # listen on port 443 (https)
+    listen 443 ssl;
+    server_name _;
+    root /home/vishakha/puzzle/frontend/build;
+    index index.html;
+
+    # location of the self-signed SSL certificate
+    ssl_certificate /home/vishakha/puzzle/certs/cert.pem;
+    ssl_certificate_key /home/vishakha/puzzle/certs/key.pem;
+
+    # write access and error logs to /var/log
+    access_log /var/log/puzzle_access.log;
+    error_log /var/log/puzzle_error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /api {
+        # forward application requests to the gunicorn server
+        proxy_pass http://localhost:8000;
+        proxy_redirect off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+// # HTTP Config below
+server {
+    listen 80;
+    root /home/vishakha/puzzle/frontend/build;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /api {
+        include proxy_params;
+        proxy_pass http://localhost:8000;
+    }
+
+}
