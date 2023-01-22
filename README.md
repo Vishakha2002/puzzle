@@ -25,3 +25,6 @@ sudo systemctl restart nginx
 
 # Microphone settings:
 chrome://settings/content/microphone
+
+#Flask react blog:
+https://blog.miguelgrinberg.com/post/how-to-deploy-a-react--flask-project
