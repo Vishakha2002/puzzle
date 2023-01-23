@@ -4,11 +4,14 @@ from flask_restful import Api, Resource, reqparse
 from api.ApiHandler import testApiConnection, AudioTranscriber, VideoUrls, HelloApiHandler
 # from api.whisper_transcription import
 import os
+import re
 import whisper
 import time
 import json
 import requests
 import tarfile
+import time
+from pytube import YouTube
 
 import logging
 logging.basicConfig(filename='flask_app.log', level=logging.DEBUG,
@@ -131,6 +134,24 @@ def trascribe():
     return {
         'resultStatus': 'SUCCESS',
         'text': "Here is the answer to your Question"
+    }
+
+
+@app.route("/api/get_yt_details/", methods=['get'])
+def fetch_youtube_video_details():
+    args = request.args
+    print(args)
+    yt = YouTube(args['url'])
+    # caption = yt.captions
+    # description = yt.description
+    thumbnail_url = yt.thumbnail_url
+    video_title = re.sub(r"[^A-Za-z0-9 ]+", "", yt.title)
+    # print(video_title)
+    # # print(description)
+    # print(thumbnail_url)
+    return {
+        'video_title': video_title,
+        'thumbnail_url': thumbnail_url
     }
 
 

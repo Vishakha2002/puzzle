@@ -55,10 +55,8 @@ class VideoUrls(Resource):
         args = request.args
 
         # online video urls
-        yt_urls = [
-            ["https://www.youtube.com/watch?v=88kd9tVwkH8", "https://www.youtube.com/watch?v=2Qsn7QHS1XU",
+        yt_urls = ["https://www.youtube.com/watch?v=88kd9tVwkH8", "https://www.youtube.com/watch?v=2Qsn7QHS1XU",
                 "https://www.youtube.com/watch?v=TzmtH_cOIb0", "https://www.youtube.com/watch?v=vchifPjqzZ4"]
-        ]
 
         # local video urls
         local_urls = [['Marcin__Moonlight_Sonata_on_One_Guitar_Official_Video.mp4']]
