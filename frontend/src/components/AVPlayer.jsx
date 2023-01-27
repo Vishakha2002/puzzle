@@ -2,19 +2,29 @@ import React, { useEffect, useState, useCallback } from "react"
 
 import ReactPlayer from "react-player"
 import Audio from "./Audio"
+import { Box, Stack, Typography } from '@mui/material';
+import axios from 'axios'
+import { Placeholder, Sidebar, Videos } from './';
 
-const AVPlayer = args => {
+const AVPlayer = (args) => {
   const [isPlaying, setIsPlaying] = useState(args.playing) // handling state of play/pause of player
   const playerRef = React.useRef(null)
   const divRef = React.useRef(null)
-
+  const [videoID, setVideoID] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("AV Player");
+  
   // Handle events
   useEffect(() => {
     divRef.current?.focus()
 
     window.removeEventListener("keypress", handleKeypress)
     window.addEventListener("keypress", handleKeypress)
-    console.log(args)
+
+    var parts = window.location.href.split('/');
+    console.log(parts)
+    var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
+    setVideoID(lastSegment)
+    console.log(lastSegment)
   }, [])
 
   const onKeyPressHandler = useCallback(
@@ -42,29 +52,56 @@ const AVPlayer = args => {
     console.log(isPlaying)
   }
 
+  const events = [
+    "onStart", "onPlay", "onProgress", "onDuration", "onPause",
+    "onBuffer", "onBufferEnd", "onSeek", "onEnded", "onError"
+  ]
+  let options = {
+  "events": events,
+  "progress_interval": 1000
+  }
+
   return (
-    <div ref={divRef} id="container" style={{ height: "400px" }}>
-      <ReactPlayer
-        ref={playerRef}
-        url={args.url}
-        onPlay={onVideoPlay}
-        onPause={onVideoPause}
-        width={args.width || undefined}
-        height={args.height || undefined}
-        playing={isPlaying || false}
-        loop={args.loop || undefined}
-        controls={args.controls || undefined}
-        light={args.light || undefined}
-        volume={args.volume}
-        muted={args.muted || undefined}
-        playbackRate={args.playbackRate}
-        progressInterval={args.progressInterval}
-        playsinline={args.playInline || undefined}
-        config={args.config || undefined}
-      />
-      <br></br>
-      <Audio />
-    </div>
+    <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
+      <Box sx={{ height: { sx: "auto", md: "92vh" }, borderRight: "1px solid #3d3d3d", px: { sx: 0, md: 2 } }}>
+          <Sidebar selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          <Typography className="copyright" variant="body2" sx={{ mt: 1.5, color: "#fff", }}>
+              Copyright © 2023 SFSU
+          </Typography>
+      </Box>
+      <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
+        <Typography variant="h4" fontWeight="bold" mb={2} sx={{ color: "white" }}>
+            {selectedCategory}
+        </Typography>
+        <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
+          <div ref={divRef} id="container" style={{ height: "400px" }}>
+            <ReactPlayer
+              ref={playerRef}
+              url={"https://www.youtube.com/watch?v=" + videoID}
+              onPlay={onVideoPlay}
+              onPause={onVideoPause}
+              options={options}
+              width={args.width || undefined}
+              height={args.height || undefined}
+              playing={isPlaying || false}
+              loop={args.loop || undefined}
+              controls={args.controls || undefined}
+              light={args.light || undefined}
+              volume={args.volume}
+              muted={args.muted || undefined}
+              playbackRate={args.playbackRate}
+              progressInterval={args.progressInterval}
+              playsinline={args.playInline || undefined}
+              config={args.config || undefined}
+            />
+            <br></br>
+            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
+              <Audio />
+            </div>
+          </div>
+        </div>
+      </Box>
+    </Stack>
   )
 }
 
