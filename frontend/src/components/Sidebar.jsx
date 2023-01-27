@@ -2,8 +2,17 @@ import { Stack } from '@mui/material';
 
 import { categories } from '../utils/constants';
 
-const Categories = ({ selectedCategory, setSelectedCategory }) => (
-    <Stack
+const Categories = ({ selectedCategory, setSelectedCategory }) => {
+// const AVPlayer = (args) => {
+  const onCatClick = (name) => {
+    console.log(name)
+    if(name === "Video QA"){
+      window.location.href = '/'
+    }
+  }
+
+  return (
+     <Stack
       direction="row"
       sx={{
         overflowY: "auto",
@@ -14,7 +23,10 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => (
       {categories.map((category) => (
         <button
           className="category-btn"
-          onClick={() => setSelectedCategory(category.name)}
+          onClick={() => {
+            onCatClick(category.name)
+            setSelectedCategory(category.name)
+          }}
           style={{
             background: category.name === selectedCategory && "#FC1503",
             color: "white",
@@ -30,6 +42,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => (
         </button>
       ))}
     </Stack>
-  );
+  )
+};
   
   export default Categories;
