@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react"
 import AudioReactRecorder, { RecordState } from "audio-react-recorder"
 import PulseLoader from "react-spinners/PulseLoader"
-// import "./Audio.css"
+import "./Audio.css"
 import axios from "axios"
 
 const Audio = () => {

@@ -4,10 +4,8 @@ import axios from 'axios'
 import { Placeholder, Sidebar, Videos } from './';
 
 const Feed = () => {
-
     const [selectedCategory, setSelectedCategory] = useState("Video QA");
     const [videos, setVideos] = useState(null);
-
 
     useEffect(() => {
         setVideos(null);
@@ -17,7 +15,6 @@ const Feed = () => {
         }
         })
         .then(response => {
-            // console.log(response.data.url)
             setVideos(response.data.url);
         }).catch(error => {
         console.log(error)
@@ -46,7 +43,6 @@ const Feed = () => {
                 }
             </Box>
         </Stack>
-
     )
 }
 
