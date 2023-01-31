@@ -12,9 +12,9 @@ const Audio = () => {
   // const [audioData, setAudioData] = useState(null);
   const [loadingInProgress, setLoadingInProgress] = useState(false)
 
-  const pause = () => {
-    setrecordstate(RecordState.PAUSE)
-  }
+  // const pause = () => {
+  //   setrecordstate(RecordState.PAUSE)
+  // }
 
   const updateLoadingInProgress = useCallback(
     () => setLoadingInProgress(loadingInProgress => !loadingInProgress),
