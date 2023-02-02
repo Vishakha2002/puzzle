@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import { Box, Stack, Typography } from '@mui/material';
 import axios from 'axios'
-import { Placeholder, Sidebar, Videos } from './';
+import { Sidebar, Videos } from './';
 
 const Feed = () => {
     const [selectedCategory, setSelectedCategory] = useState("Video QA");
@@ -34,13 +34,14 @@ const Feed = () => {
                 <Typography variant="h4" fontWeight="bold" mb={2} sx={{ color: "white" }}>
                     {selectedCategory}
                 </Typography>
-                {
+                {/* {
                     selectedCategory === "Placeholder" ? (
                         <Placeholder />
                     ) : (
                         <Videos videos={videos}/>
                     )
-                }
+                } */}
+                <Videos videos={videos}/>
             </Box>
         </Stack>
     )

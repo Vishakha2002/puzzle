@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react"
 
 import ReactPlayer from "react-player"
-import Audio from "./Audio"
 import { Box, Stack, Typography } from '@mui/material';
-import axios from 'axios'
-import { Placeholder, Sidebar, Videos } from './';
+import { Audio, Sidebar} from './';
 
 const AVPlayer = (args) => {
   const [isPlaying, setIsPlaying] = useState(args.playing) // handling state of play/pause of player
@@ -12,7 +10,7 @@ const AVPlayer = (args) => {
   const divRef = React.useRef(null)
   const [videoID, setVideoID] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("AV Player");
-  
+
   // Handle events
   useEffect(() => {
     divRef.current?.focus()
@@ -74,31 +72,31 @@ const AVPlayer = (args) => {
             {selectedCategory}
         </Typography>
         <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
-          <div ref={divRef} id="container" style={{ height: "400px" }}>
-            <ReactPlayer
-              ref={playerRef}
-              url={"https://www.youtube.com/watch?v=" + videoID}
-              onPlay={onVideoPlay}
-              onPause={onVideoPause}
-              options={options}
-              width={args.width || undefined}
-              height={args.height || undefined}
-              playing={isPlaying || false}
-              loop={args.loop || undefined}
-              controls={args.controls || undefined}
-              light={args.light || undefined}
-              volume={args.volume}
-              muted={args.muted || undefined}
-              playbackRate={args.playbackRate}
-              progressInterval={args.progressInterval}
-              playsinline={args.playInline || undefined}
-              config={args.config || undefined}
-            />
-            <br></br>
-            <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
-              <Audio />
+            <div ref={divRef} id="container" style={{ height: "400px" }}>
+                <ReactPlayer
+                ref={playerRef}
+                url={"https://www.youtube.com/watch?v=" + videoID}
+                onPlay={onVideoPlay}
+                onPause={onVideoPause}
+                options={options}
+                width={args.width || undefined}
+                height={args.height || undefined}
+                playing={isPlaying || false}
+                loop={args.loop || undefined}
+                controls={args.controls || undefined}
+                light={args.light || undefined}
+                volume={args.volume}
+                muted={args.muted || undefined}
+                playbackRate={args.playbackRate}
+                progressInterval={args.progressInterval}
+                playsinline={args.playInline || undefined}
+                config={args.config || undefined}
+                />
+                <br></br>
+                <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
+                <Audio />
+                </div>
             </div>
-          </div>
         </div>
       </Box>
     </Stack>
