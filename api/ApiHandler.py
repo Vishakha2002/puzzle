@@ -55,7 +55,8 @@ class VideoUrls(Resource):
         args = request.args
 
         # online video urls
-        yt_urls = [     "https://www.youtube.com/watch?v=6gQ7m0c4ReI",  # Video1
+        yt_urls = [
+                        "https://www.youtube.com/watch?v=6gQ7m0c4ReI",  # Video1
                         "https://www.youtube.com/watch?v=is68rlOzEio",  # Video2
                         "https://www.youtube.com/watch?v=5sHwuARMXj0",  # Video3
                         "https://www.youtube.com/watch?v=zcyatK8qc7c",  # Video4

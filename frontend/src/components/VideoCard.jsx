@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Loader from './Loader';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const VideoCard = (video) => {
     const [videoMetadata, setvideoMetadata] = useState({});
@@ -23,7 +23,7 @@ const VideoCard = (video) => {
         }).catch(error => {
             console.log(error)
         })
-    }, []);
+    }, [setvideoMetadata]);
 
     if (videoMetadata === {}) return <Loader />
 
@@ -31,7 +31,7 @@ const VideoCard = (video) => {
         console.log(video_url)
         var video_id = video_url.split('v=')[1];
         var ampersandPosition = video_id.indexOf('&');
-        if(ampersandPosition != -1) {
+        if(ampersandPosition !== -1) {
             video_id = video_id.substring(0, ampersandPosition);
         }
         window.location.href = '/avplayer/' + video_id

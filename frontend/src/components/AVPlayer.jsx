@@ -9,7 +9,7 @@ const AVPlayer = (args) => {
   const playerRef = React.useRef(null)
   const divRef = React.useRef(null)
   const [videoID, setVideoID] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("AV Player");
+  const [selectedCategory, setSelectedCategory] = useState("Video QA");
 
   // Handle events
   useEffect(() => {

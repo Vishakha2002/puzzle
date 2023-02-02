@@ -47,5 +47,5 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     </Stack>
   )
 };
-  
-  export default Categories;
+
+export default Categories;
