@@ -6,5 +6,4 @@ export { default as Navbar } from './Navbar';
 export { default as Placeholder } from './Placeholder';
 export { default as Sidebar } from './Sidebar';
 export { default as VideoCard } from './VideoCard';
-export { default as VideoQA } from './VideoQA';
 export { default as Videos } from './Videos';

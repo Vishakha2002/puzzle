@@ -9,6 +9,9 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     if(name === "Video QA"){
       window.location.href = '/'
     }
+    if(name === "Placeholder"){
+      window.location.href = '/placeholder'
+    }
   }
 
   return (
