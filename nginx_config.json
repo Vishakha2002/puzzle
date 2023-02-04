@@ -1,3 +1,8 @@
+// Source: https://blog.miguelgrinberg.com/post/how-to-deploy-a-react--flask-project
+
+// location / {
+//     try_files $uri $uri/ /index.html;
+// }
 server {
     # listen on port 80 (http)
     listen 80;
@@ -23,7 +28,7 @@ server {
     error_log /var/log/puzzle_error.log;
 
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /index.html;
     }
 
     location /api {
@@ -50,5 +55,4 @@ server {
         include proxy_params;
         proxy_pass http://localhost:8000;
     }
-
 }
