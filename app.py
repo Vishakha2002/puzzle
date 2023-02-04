@@ -1,22 +1,21 @@
-from flask import Flask, request, jsonify, send_from_directory
-from flask_restful import Api, Resource, reqparse
+from flask import Flask, send_from_directory
+from flask_restful import Api
 # from flask_cors import CORS #comment this on deployment
-from api.ApiHandler import testApiConnection, AudioTranscriber, VideoUrls, HelloApiHandler
-# from api.whisper_transcription import
+from api.ApiHandler import VideoUrls
+from api.whisper import Transcribe
+from api.youtube import YoutubeVideoDetails
+
 import os
-import re
-import whisper
-import time
 import json
 import requests
 import tarfile
-import time
-from pytube import YouTube
+
 
 import logging
 logging.basicConfig(filename='flask_app.log', level=logging.DEBUG,
                     format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
+log = logging.getLogger(__name__)
 
 def download_required_files():
     if os.path.exists("vggish_model.ckpt"):
@@ -94,8 +93,8 @@ def setup_directory() -> None:
 
 def create_app() -> Flask:
     app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-    logging.info("Staring Puzzle")
-    logging.info("Setting up directories for Puzzle")
+    log.info("Staring Puzzle")
+    log.info("Setting up directories for Puzzle")
     setup_directory()
     download_required_files()
     return app
@@ -110,52 +109,8 @@ def serve(path):
     return send_from_directory('frontend/build', 'index.html')
 
 
-@app.route("/api/transcribe_question", methods=['post'])
-def transcribe_question():
-    files = request.files['file']
-    filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"
-    file_location = os.path.abspath("./data/user_question/" + filename)
-    files.save(file_location)
-
-    model = whisper.load_model("base")
-
-    result = model.transcribe(file_location)
-    text = str(result["text"])
-
-    return {
-        'resultStatus': 'SUCCESS',
-        'text': text
-    }
-
-
-@app.route("/api/trascribe_question", methods=['get'])
-def trascribe():
-
-    return {
-        'resultStatus': 'SUCCESS',
-        'text': "Here is the answer to your Question"
-    }
-
-
-@app.route("/api/get_yt_details/", methods=['get'])
-def fetch_youtube_video_details():
-    args = request.args
-    print(args)
-    yt = YouTube(args['url'])
-    # caption = yt.captions
-    # description = yt.description
-    thumbnail_url = yt.thumbnail_url
-    video_title = re.sub(r"[^A-Za-z0-9 ]+", "", yt.title)
-    # print(video_title)
-    # # print(description)
-    # print(thumbnail_url)
-    return {
-        'video_title': video_title,
-        'thumbnail_url': thumbnail_url
-    }
-
-
-api.add_resource(HelloApiHandler, '/api/hello')
-api.add_resource(testApiConnection, '/api/test')
-api.add_resource(AudioTranscriber, '/api/transcribe')
+# api.add_resource(testApiConnection, '/api/test')
+# api.add_resource(AudioTranscriber, '/api/transcribe')
 api.add_resource(VideoUrls, '/api/yturls')
+api.add_resource(Transcribe, '/api/transcribe_question')
+api.add_resource(YoutubeVideoDetails, '/api/get_yt_details/')
