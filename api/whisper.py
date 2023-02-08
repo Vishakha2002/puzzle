@@ -10,6 +10,11 @@ log = logging.getLogger(__name__)
 
 
 class Transcribe(Resource):
+    """
+    TODO
+    - Update resultStatus
+    - Update Frontend code to handle failure.
+    """
     def post(self):
         files = request.files['file']
         filename = time.strftime("%Y%m%d_%H%M%S") + ".wav"

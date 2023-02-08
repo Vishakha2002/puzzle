@@ -28,3 +28,6 @@ chrome://settings/content/microphone
 
 #Flask react blog:
 https://blog.miguelgrinberg.com/post/how-to-deploy-a-react--flask-project
+
+# Can be helpful for debug
+https://candid.technology/runtimeerror-cudnn-error-cudnn-status-not-initialized/

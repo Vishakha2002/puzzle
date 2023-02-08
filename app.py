@@ -4,6 +4,7 @@ from flask_restful import Api
 from api.ApiHandler import VideoUrls
 from api.whisper import Transcribe
 from api.youtube import YoutubeVideoDetails
+from api.trigger_model import TriggerModel
 
 import os
 import json
@@ -110,7 +111,7 @@ def serve(path):
 
 
 # api.add_resource(testApiConnection, '/api/test')
-# api.add_resource(AudioTranscriber, '/api/transcribe')
+api.add_resource(TriggerModel, '/api/trigger_model')
 api.add_resource(VideoUrls, '/api/yturls')
 api.add_resource(Transcribe, '/api/transcribe_question')
 api.add_resource(YoutubeVideoDetails, '/api/get_yt_details/')

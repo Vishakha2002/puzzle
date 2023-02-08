@@ -11,6 +11,8 @@ const Audio = () => {
   const [blobURLResponse, setblobURLResponse] = useState("")
   // const [audioData, setAudioData] = useState(null);
   const [loadingInProgress, setLoadingInProgress] = useState(false)
+  const [modelResponse, setModelResponse] = useState("")
+  const [modelLoadingInProgress, setModelLoadingInProgress] = useState(false)
 
   // const pause = () => {
   //   setrecordstate(RecordState.PAUSE)
@@ -21,10 +23,16 @@ const Audio = () => {
     [setLoadingInProgress]
   )
 
+  const updateModelLoadingInProgress = useCallback(
+    () => setModelLoadingInProgress(modelLoadingInProgress => !modelLoadingInProgress),
+    [setModelLoadingInProgress]
+  )
+
   const setRecorderStateToStop = useCallback(
     () => {
       setrecordstate(RecordState.STOP)
       setblobURLResponse("")
+      // modelResponse("")
       // setIsStop(true);
     }, // [setIsStop, setrecordstate, setblobURL],
     [setrecordstate, setblobURLResponse]
@@ -36,6 +44,7 @@ const Audio = () => {
       setrecordstate(RecordState.START)
       // setblobURL("");
       setblobURLResponse("")
+      // modelResponse("")
     }, // [setIsStop, setrecordstate, setblobURL, setblobURLResponse],
     [setrecordstate, setblobURLResponse]
   )
@@ -86,6 +95,19 @@ const Audio = () => {
 
         // This function firsts shows Loading message and calls transcribe API as well
         // start();
+        if (response.data["text"]) {
+          updateModelLoadingInProgress()
+          axios.post('/api/trigger_model', {
+            question: response.data["text"]}, {
+            headers: "Content-Type: application/json"}
+          ).then(response => {
+            updateModelLoadingInProgress()
+            console.log(response)
+            setModelResponse("Your answer is: " + response.data["answer"])
+          }).catch(error => {
+            console.log(error)
+          })
+        }
       })
       .catch(error => {
         console.log(error)
@@ -143,6 +165,15 @@ const Audio = () => {
               <PulseLoader color="#36d7b7" loading={loadingInProgress} />
             </div>
           )}
+          {modelResponse !== "" ? (
+            <div>
+              <h5>{modelResponse}</h5>
+            </div>
+          ) :
+          <div>
+              <PulseLoader color="#36d7b7" loading={modelLoadingInProgress} />
+            </div>
+          }
         </div>
         <div style={{ alignItems: "center" }}>
           <AudioReactRecorder

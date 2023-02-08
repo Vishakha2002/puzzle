@@ -1,7 +1,6 @@
-from flask_restful import Api, Resource, reqparse
-from flask import Flask, request
+from flask_restful import  Resource
+from flask import request
 import logging
-import whisper
 
 log = logging.getLogger(__name__)
 
