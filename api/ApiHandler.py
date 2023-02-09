@@ -70,7 +70,7 @@ class VideoUrls(Resource):
                         "https://www.youtube.com/watch?v=AHlG_PwwvGY",  # Video11
                         "https://www.youtube.com/watch?v=BIPTE84l9ls",  # Video12
                         "https://www.youtube.com/watch?v=iveZwfEhZYI",  # Video13
-                        "https://www.youtube.com/watch?v=Oipg71dSem0",  # Video14
+                        # "https://www.youtube.com/watch?v=Oipg71dSem0",  # Video14
                         "https://www.youtube.com/watch?v=-PWiegZQfAY",  # Video15
                         "https://www.youtube.com/watch?v=1Asc6IaPunU",  # Video16
                         "https://www.youtube.com/watch?v=l0JKkmztuRE",  # Video17

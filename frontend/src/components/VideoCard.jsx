@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-import axios from 'axios'
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Loader from './Loader';
 import { useNavigate } from "react-router-dom"
@@ -8,19 +7,32 @@ const VideoCard = (video) => {
     const [videoMetadata, setvideoMetadata] = useState({});
     const [video_url] = useState(video.video)
     const navigate = useNavigate();
+    var video_id = video_url.split('v=')[1];
+    var ampersandPosition = video_id.indexOf('&');
+    if(ampersandPosition !== -1) {
+        video_id = video_id.substring(0, ampersandPosition);
+    }
 
     useEffect(() => {
         setvideoMetadata({});
-        axios.get('/api/get_yt_details/', {
-            params: {
-                url: video
-            }
+        // Adding new API call to fix Thumbnail and Title name
+        fetch(`https://noembed.com/embed?dataType=json&url=${video_url}`)
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data.title)
+            setvideoMetadata({thumbnail_url: `https://img.youtube.com/vi/${video_id}/sddefault.jpg`, video_title: data.title})
         })
-        .then(response => {
-            setvideoMetadata(response.data);
-        }).catch(error => {
-            console.log(error)
-        })
+
+        // axios.get('/api/get_yt_details/', {
+        //     params: {
+        //         url: video.video
+        //     }
+        // })
+        // .then(response => {
+        //     setvideoMetadata(response.data);
+        // }).catch(error => {
+        //     console.log(error)
+        // })
     }, [setvideoMetadata]);
 
     if (videoMetadata === {}) return <Loader />
