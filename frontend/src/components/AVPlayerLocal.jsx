@@ -4,13 +4,12 @@ import ReactPlayer from "react-player"
 import { Box, Stack, Typography } from '@mui/material';
 import { Audio, Sidebar} from './';
 
-const AVPlayer = (args) => {
+const AVPlayerLocal = (args) => {
   const [isPlaying, setIsPlaying] = useState(args.playing) // handling state of play/pause of player
   const playerRef = React.useRef(null)
   const divRef = React.useRef(null)
-  const [videoID, setVideoID] = useState("")
+  const [videoURL, setVideoURL] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("Video QA");
-  console.log(args.videoFeedType)
 
   // Handle events
   useEffect(() => {
@@ -20,9 +19,8 @@ const AVPlayer = (args) => {
     window.addEventListener("keypress", handleKeypress)
 
     var parts = window.location.href.split('/');
-    console.log(parts)
     var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
-    setVideoID(lastSegment)
+    setVideoURL('videos/' + lastSegment)
     console.log(lastSegment)
   }, [])
 
@@ -76,7 +74,7 @@ const AVPlayer = (args) => {
             <div ref={divRef} id="container" style={{ height: "400px" }}>
                 <ReactPlayer
                 ref={playerRef}
-                url={"https://www.youtube.com/watch?v=" + videoID}
+                url={videoURL}
                 onPlay={onVideoPlay}
                 onPause={onVideoPause}
                 options={options}
@@ -104,4 +102,4 @@ const AVPlayer = (args) => {
   )
 }
 
-export default AVPlayer
+export default AVPlayerLocal

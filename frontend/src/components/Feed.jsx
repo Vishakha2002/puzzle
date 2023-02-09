@@ -3,6 +3,8 @@ import { Box, Stack, Typography } from '@mui/material';
 import axios from 'axios'
 import { Sidebar, Videos } from './';
 
+var videoFeedType = "local"
+
 const Feed = () => {
     const [selectedCategory, setSelectedCategory] = useState("Video QA");
     const [videos, setVideos] = useState(null);
@@ -11,7 +13,7 @@ const Feed = () => {
         setVideos(null);
         axios.get('/api/yturls', {
         params: {
-            type: "online"
+            type: videoFeedType
         }
         })
         .then(response => {
@@ -41,7 +43,7 @@ const Feed = () => {
                         <Videos videos={videos}/>
                     )
                 } */}
-                <Videos videos={videos}/>
+                <Videos videos={videos} feedType={videoFeedType}/>
             </Box>
         </Stack>
     )

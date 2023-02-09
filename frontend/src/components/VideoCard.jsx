@@ -3,9 +3,10 @@ import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Loader from './Loader';
 import { useNavigate } from "react-router-dom"
 
-const VideoCard = (video) => {
+const VideoCard = ({video, videoFeedType}) => {
+    console.log(video, videoFeedType)
     const [videoMetadata, setvideoMetadata] = useState({});
-    const [video_url] = useState(video.video)
+    const [video_url] = useState(video)
     const navigate = useNavigate();
     var video_id = video_url.split('v=')[1];
     var ampersandPosition = video_id.indexOf('&');
@@ -22,17 +23,6 @@ const VideoCard = (video) => {
             console.log(data.title)
             setvideoMetadata({thumbnail_url: `https://img.youtube.com/vi/${video_id}/sddefault.jpg`, video_title: data.title})
         })
-
-        // axios.get('/api/get_yt_details/', {
-        //     params: {
-        //         url: video.video
-        //     }
-        // })
-        // .then(response => {
-        //     setvideoMetadata(response.data);
-        // }).catch(error => {
-        //     console.log(error)
-        // })
     }, [setvideoMetadata]);
 
     if (videoMetadata === {}) return <Loader />
