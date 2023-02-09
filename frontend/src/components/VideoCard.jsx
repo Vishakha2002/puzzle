@@ -1,24 +1,22 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
-
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import Loader from './Loader';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
 
 const VideoCard = (video) => {
     const [videoMetadata, setvideoMetadata] = useState({});
     const [video_url] = useState(video.video)
+    const navigate = useNavigate();
 
     useEffect(() => {
         setvideoMetadata({});
-
         axios.get('/api/get_yt_details/', {
             params: {
                 url: video
             }
         })
         .then(response => {
-            console.log(response)
             setvideoMetadata(response.data);
         }).catch(error => {
             console.log(error)
@@ -34,7 +32,7 @@ const VideoCard = (video) => {
         if(ampersandPosition !== -1) {
             video_id = video_id.substring(0, ampersandPosition);
         }
-        window.location.href = '/avplayer/' + video_id
+        navigate('/avplayer/' + video_id);
     }
 
     return (

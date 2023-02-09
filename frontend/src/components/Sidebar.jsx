@@ -1,16 +1,16 @@
 import { Stack } from '@mui/material';
-
+import { useNavigate } from "react-router-dom"
 import { categories } from '../utils/constants';
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => {
-// const AVPlayer = (args) => {
+  const navigate = useNavigate();
+
   const onCatClick = (name) => {
-    console.log(name)
     if(name === "Video QA"){
-      window.location.href = '/'
+      navigate('/');
     }
     if(name === "Placeholder"){
-      window.location.href = '/placeholder'
+      navigate('/placeholder');
     }
   }
 
