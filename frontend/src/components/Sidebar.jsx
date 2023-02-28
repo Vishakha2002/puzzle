@@ -9,8 +9,8 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     if(name === "Video QA"){
       navigate('/');
     }
-    if(name === "Placeholder"){
-      navigate('/placeholder');
+    if(name === "Video Description"){
+      navigate('/videodes');
     }
   }
 

@@ -3,5 +3,5 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 export const categories = [
   { name: 'Video QA', icon: <OndemandVideoIcon />, },
-  { name: 'Placeholder', icon: <DeveloperModeIcon />, },
+  { name: 'Video Description', icon: <DeveloperModeIcon />, },
 ];

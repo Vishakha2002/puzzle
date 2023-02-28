@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import { Box, Stack, Typography } from '@mui/material';
-import { Sidebar } from './';
+import { Sidebar } from '.';
 
-const Placeholder = () => {
-  const [selectedCategory, setSelectedCategory] = useState("Placeholder");
+const VideoDescription = () => {
+  const [selectedCategory, setSelectedCategory] = useState("Video Description");
 
   return (
     <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
@@ -22,4 +22,4 @@ const Placeholder = () => {
   )
 }
 
-export default Placeholder;
+export default VideoDescription;

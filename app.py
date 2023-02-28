@@ -20,16 +20,16 @@ log = logging.getLogger(__name__)
 
 def download_required_files():
     if os.path.exists("vggish_model.ckpt"):
-        logging.info("Found vggish_model.ckpt, no need to download it")
+        log.info("Found vggish_model.ckpt, no need to download it")
     else:
         URL = "https://storage.googleapis.com/audioset/vggish_model.ckpt"
         response = requests.get(URL)
         open("vggish_model.ckpt", "wb").write(response.content)
-        logging.info("Downloaded vggish_model.ckpt")
+        log.info("Downloaded vggish_model.ckpt")
     if os.path.exists("ffmpeg_dir/ffmpeg-git-20220910-i686-static/ffmpeg"):
-        logging.info("ffmpeg is already downloaded")
+        log.info("ffmpeg is already downloaded")
     else:
-        logging.info("Downloading ffmpeg")
+        log.info("Downloading ffmpeg")
         os.makedirs("ffmpeg_dir")
 
         URL = "https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-i686-static.tar.xz"
@@ -39,7 +39,7 @@ def download_required_files():
         ffmpeg_file = tarfile.open('ffmpeg-git-i686-static.tar.xz')
         ffmpeg_file.extractall('./ffmpeg_dir')
         ffmpeg_file.close()
-        logging.info("Setting ffmpeg file path")
+        log.info("Setting ffmpeg file path")
 
     if "ffmpeg_dir" not in os.environ["PATH"]:
         os.environ["PATH"] += os.pathsep + os.path.join(os.getcwd(), "ffmpeg_dir/ffmpeg-git-20220910-i686-static/")

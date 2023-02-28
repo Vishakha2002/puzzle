@@ -1,7 +1,7 @@
 // import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { Feed, AVPlayer, Placeholder, Navbar, AVPlayerLocal } from './components';
+import { Feed, AVPlayer, VideoDescription, Navbar, AVPlayerLocal } from './components';
 
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
                     <Route path="/" exact element={<Feed />} />
                     <Route path="/avplayer/:id" exact element={<AVPlayer />} />
                     <Route path="/avplayerlocal/:id" exact element={<AVPlayerLocal />} />
-                    <Route path="/placeholder" exact element={<Placeholder />} />
+                    <Route path="/videodes" exact element={<VideoDescription />} />
                 </Routes>
             </Box>
         </BrowserRouter>

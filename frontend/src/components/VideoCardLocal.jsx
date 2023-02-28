@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import Loader from './Loader';
+// import Loader from './Loader';
 import { useNavigate } from "react-router-dom"
 
 const VideoCardLocal = ({video}) => {

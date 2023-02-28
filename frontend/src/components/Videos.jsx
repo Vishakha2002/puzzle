@@ -4,7 +4,7 @@ import { Loader, VideoCard, VideoCardLocal } from "./";
 
 const Videos = ({ videos, direction, feedType}) => {
   const [isOnline, setIsOnline] = useState(true);
-    
+
   console.log(feedType)
 
   useEffect(() => {
