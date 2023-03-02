@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import axios from 'axios'
 import { Sidebar, Videos } from './';
 
-var videoFeedType = "local"
+var videoFeedType = "online"
 
 const Feed = () => {
     const [selectedCategory, setSelectedCategory] = useState("Video QA");

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react"
 
 import ReactPlayer from "react-player"
 import { Box, Stack, Typography } from '@mui/material';
-import { Audio, Sidebar} from './';
+import { Audio, Sidebar, AudioListener} from './';
 
 const AVPlayer = (args) => {
   const [isPlaying, setIsPlaying] = useState(args.playing) // handling state of play/pause of player
@@ -95,7 +95,8 @@ const AVPlayer = (args) => {
                 />
                 <br></br>
                 <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', marginTop: '25px'}}>
-                <Audio />
+                {/* <Audio /> */}
+                  <AudioListener />
                 </div>
             </div>
         </div>

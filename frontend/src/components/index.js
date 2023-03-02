@@ -9,3 +9,4 @@ export { default as Sidebar } from './Sidebar';
 export { default as VideoCard } from './VideoCard';
 export { default as VideoCardLocal } from './VideoCardLocal';
 export { default as Videos } from './Videos';
+export { default as AudioListener } from './AudioListener';
